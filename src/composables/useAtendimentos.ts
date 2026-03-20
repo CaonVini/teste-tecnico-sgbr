@@ -3,8 +3,10 @@ import type { Atendimento } from '../types';
 
 const STORAGE_KEY = '@sgbr:atendimentos';
 
+
+const atendimentos = ref<Atendimento[]>([]);
+
 export function useAtendimentos() {
-  const atendimentos = ref<Atendimento[]>([]);
 
   const loadFromStorage = () => {
     const data = localStorage.getItem(STORAGE_KEY);
