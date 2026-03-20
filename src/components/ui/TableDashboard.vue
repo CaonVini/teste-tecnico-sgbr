@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Atendimento } from '../../types';
+import type { Atendimento } from "../../types";
 
 defineProps<{
   items: Atendimento[];
@@ -10,29 +10,36 @@ const statusColors = {
   "Em andamento": "bg-yellow-100 text-yellow-700",
   Finalizado: "bg-green-100 text-green-700",
 };
+
+const formatarData = (dataISO?: string) => {
+  if (!dataISO) return "-";
+  if (!dataISO.includes("T")) return dataISO;
+  const [data, hora] = dataISO.split("T");
+  const [ano, mes, dia] = data.split("-");
+  return `${dia}/${mes}/${ano} às ${hora}`;
+};
 </script>
 
 <template>
   <div
-    class="overflow-x-auto bg-white rounded-xl shadow-sm border border-slate-200"
+    class="overflow-x-auto bg-white rounded-lg shadow-sm border border-slate-200"
   >
     <table class="w-full text-left border-collapse min-w-[800px]">
       <thead>
-        <tr
-          class="bg-slate-50 border-b border-slate-200 text-slate-500 text-xs uppercase tracking-wider"
-        >
-          <th class="py-4 px-6 font-medium">Nome do cliente</th>
-          <th class="py-4 px-6 font-medium">Assunto</th>
-          <th class="py-4 px-6 font-medium">Status</th>
-          <th class="py-4 px-6 font-medium">Data/Hora Atend.</th>
-          <th class="py-4 px-6 font-medium">Data/Hora Fim</th>
+        <tr class="bg-[#0b5ed7] text-white text-sm">
+          <th class="py-3.5 px-6 font-semibold">Nome do cliente</th>
+          <th class="py-3.5 px-6 font-semibold">Assunto</th>
+          <th class="py-3.5 px-6 font-semibold">Status</th>
+          <th class="py-3.5 px-6 font-semibold">Data/Hora Atend.</th>
+          <th class="py-3.5 px-6 font-semibold">Data/Hora Fim</th>
         </tr>
       </thead>
       <tbody class="text-sm">
         <tr
-          v-for="item in items"
+          v-for="(item, index) in items"
           :key="item.id"
-          class="border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors"
+          class="border-b border-slate-100 last:border-0 hover:bg-slate-200/50 transition-colors"
+          :class="index % 2 === 0 ? 'bg-slate-50/50' : 'bg-white'"
         >
           <td class="py-4 px-6 font-medium text-slate-900">
             {{ item.cliente }}
@@ -46,9 +53,11 @@ const statusColors = {
               {{ item.status }}
             </span>
           </td>
-          <td class="py-4 px-6 text-slate-500">{{ item.dataAtendimento }}</td>
-          <td class="py-4 px-6 text-slate-500">
-            {{ item.dataFinalizado || "-" }}
+          <td class="py-4 px-6 text-slate-500 font-medium">
+            {{ formatarData(item.dataAtendimento) }}
+          </td>
+          <td class="py-4 px-6 text-slate-500 font-medium">
+            {{ formatarData(item.dataFinalizado) }}
           </td>
         </tr>
 
