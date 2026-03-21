@@ -3,29 +3,31 @@ import type { Atendimento } from '../types';
 
 const STORAGE_KEY = '@sgbr:atendimentos';
 
-
 const atendimentos = ref<Atendimento[]>([]);
 
-export function useAtendimentos() {
-
-  const loadFromStorage = () => {
-    const data = localStorage.getItem(STORAGE_KEY);
-    if (data) {
-      try {
-        atendimentos.value = JSON.parse(data);
-      } catch (e) {
-        console.error('Erro ao fazer parse do localStorage', e);
-        atendimentos.value = [];
-      }
-    } else {
+// Roda apenas uma vez quando o módulo for importado
+const loadFromStorage = () => {
+  const data = localStorage.getItem(STORAGE_KEY);
+  if (data) {
+    try {
+      atendimentos.value = JSON.parse(data);
+    } catch (e) {
+      console.error('Erro ao fazer parse do localStorage', e);
       atendimentos.value = [];
     }
-  };
+  } else {
+    atendimentos.value = [];
+  }
+};
 
-  watch(atendimentos, (newVal) => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(newVal));
-  }, { deep: true });
+loadFromStorage();
 
+// Observa o array reativo globalmente (1 só watcher pro App todo)
+watch(atendimentos, (newVal) => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(newVal));
+}, { deep: true });
+
+export function useAtendimentos() {
   const addAtendimento = (item: Omit<Atendimento, 'id'>) => {
     const id = Date.now().toString(); 
     atendimentos.value.unshift({ ...item, id });
@@ -41,8 +43,6 @@ export function useAtendimentos() {
       atendimentos.value[index] = { ...item };
     }
   };
-
-  loadFromStorage();
 
   return {
     atendimentos,
