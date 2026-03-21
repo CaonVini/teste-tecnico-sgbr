@@ -2,9 +2,10 @@
 import { ref } from "vue";
 import type { Atendimento } from "../../types";
 import ConfirmarCard from "./ConfirmarCard.vue";
+import EditarModal from "./EditarModal.vue";
 import { useAtendimentos } from "../../composables/useAtendimentos";
 
-const { deleteAtendimento } = useAtendimentos();
+const { deleteAtendimento, updateAtendimento } = useAtendimentos();
 
 defineProps<{
   items: Atendimento[];
@@ -25,12 +26,18 @@ const formatarData = (dataISO?: string) => {
 };
 
 const idParaExcluir = ref<number | string | null>(null);
+const atendimentoParaEditar = ref<Atendimento | null>(null);
 
 const confirmarExclusao = () => {
   if (idParaExcluir.value) {
     deleteAtendimento(idParaExcluir.value);
     idParaExcluir.value = null;
   }
+};
+
+const salvarEdicao = (atendimentoAtualizado: Atendimento) => {
+  updateAtendimento(atendimentoAtualizado);
+  atendimentoParaEditar.value = null;
 };
 </script>
 
@@ -78,6 +85,7 @@ const confirmarExclusao = () => {
           <td class="py-4 px-6 text-center">
             <div class="flex items-center justify-center gap-2">
               <button
+                @click="atendimentoParaEditar = item"
                 class="w-8 h-8 rounded-lg hover:bg-blue-50 transition-colors focus:outline-none bg-[url('/icons/edit.svg')] bg-center bg-no-repeat bg-[length:16px_16px]"
                 title="Editar"
               ></button>
@@ -104,5 +112,13 @@ const confirmarExclusao = () => {
     message="Tem certeza que deseja excluir permanentemente este atendimento?"
     @confirm="confirmarExclusao"
     @cancel="idParaExcluir = null"
+  />
+
+  <!-- Modal Global de Edição (apenas renderizado se o Lápis for Clicado) -->
+  <EditarModal
+    v-if="atendimentoParaEditar"
+    :atendimento="atendimentoParaEditar"
+    @save="salvarEdicao"
+    @cancel="atendimentoParaEditar = null"
   />
 </template>

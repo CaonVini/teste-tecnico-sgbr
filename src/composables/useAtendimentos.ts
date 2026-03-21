@@ -35,11 +35,19 @@ export function useAtendimentos() {
     atendimentos.value = atendimentos.value.filter(a => a.id !== id);
   };
 
+  const updateAtendimento = (item: Atendimento) => {
+    const index = atendimentos.value.findIndex(a => a.id === item.id);
+    if (index !== -1) {
+      atendimentos.value[index] = { ...item };
+    }
+  };
+
   loadFromStorage();
 
   return {
     atendimentos,
     addAtendimento,
-    deleteAtendimento
+    deleteAtendimento,
+    updateAtendimento
   };
 }
