@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import type { Atendimento } from "../../types";
+import ConfirmarCard from "./ConfirmarCard.vue";
+import { useAtendimentos } from "../../composables/useAtendimentos";
+
+const { deleteAtendimento } = useAtendimentos();
 
 defineProps<{
   items: Atendimento[];
@@ -18,6 +22,15 @@ const formatarData = (dataISO?: string) => {
   const [data, hora] = dataISO.split("T");
   const [ano, mes, dia] = data.split("-");
   return `${dia}/${mes}/${ano} às ${hora}`;
+};
+
+const idParaExcluir = ref<number | string | null>(null);
+
+const confirmarExclusao = () => {
+  if (idParaExcluir.value) {
+    deleteAtendimento(idParaExcluir.value);
+    idParaExcluir.value = null;
+  }
 };
 </script>
 
@@ -64,11 +77,12 @@ const formatarData = (dataISO?: string) => {
 
           <td class="py-4 px-6 text-center">
             <div class="flex items-center justify-center gap-2">
-              <button 
+              <button
                 class="w-8 h-8 rounded-lg hover:bg-blue-50 transition-colors focus:outline-none bg-[url('/icons/edit.svg')] bg-center bg-no-repeat bg-[length:16px_16px]"
                 title="Editar"
               ></button>
-              <button 
+              <button
+                @click="idParaExcluir = item.id"
                 class="w-8 h-8 rounded-lg hover:bg-red-50 transition-colors focus:outline-none bg-[url('/icons/delete.svg')] bg-center bg-no-repeat bg-[length:16px_16px]"
                 title="Excluir"
               ></button>
@@ -84,4 +98,11 @@ const formatarData = (dataISO?: string) => {
       </tbody>
     </table>
   </div>
+
+  <ConfirmarCard
+    v-if="idParaExcluir"
+    message="Tem certeza que deseja excluir permanentemente este atendimento?"
+    @confirm="confirmarExclusao"
+    @cancel="idParaExcluir = null"
+  />
 </template>

@@ -31,10 +31,15 @@ export function useAtendimentos() {
     atendimentos.value.unshift({ ...item, id });
   };
 
+  const deleteAtendimento = (id: string | number) => {
+    atendimentos.value = atendimentos.value.filter(a => a.id !== id);
+  };
+
   loadFromStorage();
 
   return {
     atendimentos,
-    addAtendimento
+    addAtendimento,
+    deleteAtendimento
   };
 }
