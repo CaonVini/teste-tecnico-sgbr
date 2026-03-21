@@ -14,3 +14,4 @@ export interface NovoAtendimento {
   dataAtendimento: string;
   dataFinalizado?: string;
 }
+

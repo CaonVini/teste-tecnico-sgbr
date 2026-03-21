@@ -3,8 +3,11 @@ import { ref } from "vue";
 import AtendimentoTable from "../ui/AtendimentoTable.vue";
 import CriarAtendimentoModal from "../ui/CriarAtendimentoModal.vue";
 import FiltrosSecao from "../ui/FiltrosSecao.vue";
+import Spinner from "../ui/Spinner.vue";
+import { useAtendimentos } from "../../composables/useAtendimentos";
 import { useFiltrosAtendimento } from "../../composables/useFiltrosAtendimento";
 
+const { isLoading } = useAtendimentos();
 const { searchQuery, statusFilter, atendimentosFiltrados } = useFiltrosAtendimento();
 
 const isModalOpen = ref(false);
@@ -34,8 +37,9 @@ const isModalOpen = ref(false);
         v-model:status="statusFilter" 
       />
 
-      <div class="mt-4">
-        <AtendimentoTable :items="atendimentosFiltrados" />
+      <div class="mt-4 min-h-[300px]">
+        <Spinner v-if="isLoading" />
+        <AtendimentoTable v-else :items="atendimentosFiltrados" />
       </div>
     </div>
 

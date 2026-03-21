@@ -5,8 +5,10 @@ import { useToast } from './useToast';
 const STORAGE_KEY = '@sgbr:atendimentos';
 
 const atendimentos = ref<Atendimento[]>([]);
+const isLoading = ref<boolean>(true);
 
 const loadFromStorage = () => {
+  isLoading.value = true;
   const data = localStorage.getItem(STORAGE_KEY);
   if (data) {
     try {
@@ -18,6 +20,7 @@ const loadFromStorage = () => {
   } else {
     atendimentos.value = [];
   }
+  isLoading.value = false;
 };
 
 loadFromStorage();
@@ -50,6 +53,7 @@ export function useAtendimentos() {
 
   return {
     atendimentos,
+    isLoading,
     addAtendimento,
     deleteAtendimento,
     updateAtendimento

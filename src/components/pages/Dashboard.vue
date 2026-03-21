@@ -3,10 +3,11 @@ import { computed } from "vue";
 import DashboardCard from "../ui/DashboardCard.vue";
 import AtendimentoTable from "../ui/AtendimentoTable.vue";
 import FiltrosSecao from "../ui/FiltrosSecao.vue";
+import Spinner from "../ui/Spinner.vue";
 import { useAtendimentos } from "../../composables/useAtendimentos";
 import { useFiltrosAtendimento } from "../../composables/useFiltrosAtendimento";
 
-const { atendimentos } = useAtendimentos();
+const { atendimentos, isLoading } = useAtendimentos();
 const { searchQuery, statusFilter, atendimentosFiltrados } = useFiltrosAtendimento();
 
 const estatisticas = computed(() => {
@@ -50,8 +51,9 @@ const estatisticas = computed(() => {
         v-model:status="statusFilter" 
       />
 
-      <div class="mt-4">
-        <AtendimentoTable :items="atendimentosFiltrados" hideActions />
+      <div class="mt-4 min-h-[300px]">
+        <Spinner v-if="isLoading" />
+        <AtendimentoTable v-else :items="atendimentosFiltrados" hideActions />
       </div>
     </div>
   </div>
