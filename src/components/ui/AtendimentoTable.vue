@@ -19,16 +19,6 @@ const formatarData = (dataISO?: string) => {
   const [ano, mes, dia] = data.split("-");
   return `${dia}/${mes}/${ano} às ${hora}`;
 };
-
-const activeDropdown = ref<number | string | null>(null);
-
-const toggleDropdown = (id: string | number) => {
-  if (activeDropdown.value === id) {
-    activeDropdown.value = null;
-  } else {
-    activeDropdown.value = id;
-  }
-};
 </script>
 
 <template>
@@ -73,49 +63,15 @@ const toggleDropdown = (id: string | number) => {
           </td>
 
           <td class="py-4 px-6 text-center">
-            <div class="relative inline-block text-left">
-              <button
-                @click="toggleDropdown(item.id)"
-                class="p-2 rounded-lg hover:bg-slate-200 text-slate-500 transition-colors focus:outline-none"
-              >
-                <svg
-                  class="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-                  ></path>
-                </svg>
-              </button>
-
-              <div
-                v-if="activeDropdown === item.id"
-                @click="activeDropdown = null"
-                class="fixed inset-0 z-10"
-              ></div>
-
-              <div
-                v-if="activeDropdown === item.id"
-                class="absolute right-0 mt-2 w-36 bg-white rounded-lg shadow-lg border border-slate-200 z-20 overflow-hidden"
-              >
-                <div class="flex flex-col py-1">
-                  <button
-                    class="w-full text-left px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors font-medium"
-                  >
-                    Editar
-                  </button>
-                  <button
-                    class="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors font-medium"
-                  >
-                    Excluir
-                  </button>
-                </div>
-              </div>
+            <div class="flex items-center justify-center gap-2">
+              <button 
+                class="w-8 h-8 rounded-lg hover:bg-blue-50 transition-colors focus:outline-none bg-[url('/icons/edit.svg')] bg-center bg-no-repeat bg-[length:16px_16px]"
+                title="Editar"
+              ></button>
+              <button 
+                class="w-8 h-8 rounded-lg hover:bg-red-50 transition-colors focus:outline-none bg-[url('/icons/delete.svg')] bg-center bg-no-repeat bg-[length:16px_16px]"
+                title="Excluir"
+              ></button>
             </div>
           </td>
         </tr>
