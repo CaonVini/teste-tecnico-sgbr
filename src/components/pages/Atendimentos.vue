@@ -11,8 +11,8 @@ const isModalOpen = ref(false);
 </script>
 
 <template>
-  <div class="h-full w-full p-8 flex flex-col">
-    <div class="mb-8 flex justify-between items-center flex-shrink-0">
+  <div class="w-full p-8 flex flex-col">
+    <div class="mb-8 flex justify-between items-center sm:flex-row flex-col gap-4">
       <div>
         <h1 class="text-3xl font-bold text-slate-800">Atendimentos Gerais</h1>
         <p class="text-slate-500 mt-1">
@@ -28,13 +28,13 @@ const isModalOpen = ref(false);
       </button>
     </div>
 
-    <div class="flex-1 min-h-0 flex flex-col w-full p-8 bg-white rounded-xl shadow-sm border border-slate-200">
+    <div class="w-full p-8 bg-white rounded-xl shadow-sm border border-slate-200">
       <FiltrosSecao 
         v-model:search="searchQuery" 
         v-model:status="statusFilter" 
       />
 
-      <div class="flex-1 min-h-0 overflow-y-auto">
+      <div class="mt-4">
         <AtendimentoTable :items="atendimentosFiltrados" />
       </div>
     </div>

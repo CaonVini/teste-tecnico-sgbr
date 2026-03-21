@@ -21,7 +21,7 @@ const estatisticas = computed(() => {
 </script>
 
 <template>
-  <div class="h-full w-full p-8 flex flex-col">
+  <div class="w-full p-8 flex flex-col">
     <h1 class="text-3xl font-bold text-slate-800">Dashboard</h1>
     <div class="flex w-full justify-between gap-6 mt-8">
       <DashboardCard
@@ -43,14 +43,14 @@ const estatisticas = computed(() => {
         icon="/icons/success-check-win-done-mark-good-svgrepo-com.svg"
       />
     </div>
-    <div class="flex-1 min-h-0 flex flex-col w-full mt-8 p-8 bg-white rounded-xl shadow-sm border border-slate-200">
+    <div class="w-full mt-8 p-8 bg-white rounded-xl shadow-sm border border-slate-200">
       
       <FiltrosSecao 
         v-model:search="searchQuery" 
         v-model:status="statusFilter" 
       />
 
-      <div class="flex-1 min-h-0 overflow-y-auto">
+      <div class="mt-4">
         <AtendimentoTable :items="atendimentosFiltrados" hideActions />
       </div>
     </div>
