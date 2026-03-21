@@ -11,7 +11,6 @@ const emit = defineEmits(['confirm', 'cancel']);
     class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 backdrop-blur-[2px]"
     @click.self="emit('cancel')"
   >
-    <!-- Modal Limpo e Minimalista -->
     <div class="bg-white rounded-lg shadow-lg w-full max-w-[420px] p-6 text-left">
       
       <h3 class="text-[1.1rem] font-semibold text-slate-800 mb-2">

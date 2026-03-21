@@ -5,7 +5,6 @@ const STORAGE_KEY = '@sgbr:atendimentos';
 
 const atendimentos = ref<Atendimento[]>([]);
 
-// Roda apenas uma vez quando o módulo for importado
 const loadFromStorage = () => {
   const data = localStorage.getItem(STORAGE_KEY);
   if (data) {
@@ -22,7 +21,6 @@ const loadFromStorage = () => {
 
 loadFromStorage();
 
-// Observa o array reativo globalmente (1 só watcher pro App todo)
 watch(atendimentos, (newVal) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(newVal));
 }, { deep: true });

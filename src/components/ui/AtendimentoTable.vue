@@ -9,6 +9,7 @@ const { deleteAtendimento, updateAtendimento } = useAtendimentos();
 
 defineProps<{
   items: Atendimento[];
+  hideActions?: boolean;
 }>();
 
 const statusColors = {
@@ -53,7 +54,7 @@ const salvarEdicao = (atendimentoAtualizado: Atendimento) => {
           <th class="py-3.5 px-6 font-semibold">Status</th>
           <th class="py-3.5 px-6 font-semibold">Data/Hora Atend.</th>
           <th class="py-3.5 px-6 font-semibold">Data/Hora Fim</th>
-          <th class="py-3.5 px-6 font-semibold w-20 text-center">Ações</th>
+          <th v-if="!hideActions" class="py-3.5 px-6 font-semibold w-20 text-center">Ações</th>
         </tr>
       </thead>
       <tbody class="text-sm">
@@ -82,7 +83,7 @@ const salvarEdicao = (atendimentoAtualizado: Atendimento) => {
             {{ formatarData(item.dataFinalizado) }}
           </td>
 
-          <td class="py-4 px-6 text-center">
+          <td v-if="!hideActions" class="py-4 px-6 text-center">
             <div class="flex items-center justify-center gap-2">
               <button
                 @click="atendimentoParaEditar = item"
@@ -99,7 +100,7 @@ const salvarEdicao = (atendimentoAtualizado: Atendimento) => {
         </tr>
 
         <tr v-if="items.length === 0">
-          <td colspan="6" class="py-12 text-center text-slate-500">
+          <td :colspan="hideActions ? 5 : 6" class="py-12 text-center text-slate-500">
             Nenhum atendimento encontrado.
           </td>
         </tr>
@@ -114,7 +115,6 @@ const salvarEdicao = (atendimentoAtualizado: Atendimento) => {
     @cancel="idParaExcluir = null"
   />
 
-  <!-- Modal Global de Edição (apenas renderizado se o Lápis for Clicado) -->
   <EditarModal
     v-if="atendimentoParaEditar"
     :atendimento="atendimentoParaEditar"
