@@ -3,6 +3,7 @@ import { ref, computed } from "vue";
 import Navbar from "./components/layout/Navbar.vue";
 import Dashboard from "./components/pages/Dashboard.vue";
 import Atendimentos from "./components/pages/Atendimentos.vue";
+import ToastContainer from "./components/ui/ToastContainer.vue";
 
 const currentPage = ref("dashboard");
 
@@ -22,5 +23,7 @@ const currentComponent = computed(() => {
     <main class="flex-1 overflow-y-auto bg-slate-100">
       <component :is="currentComponent" />
     </main>
+
+    <ToastContainer />
   </div>
 </template>
