@@ -41,7 +41,8 @@ describe('useAtendimentos', () => {
 
     expect(atendimentos.value).toHaveLength(1);
     expect(atendimentos.value[0].cliente).toBe('Vinicius Teste');
-    expect(atendimentos.value[0].id).toBeDefined();
+    expect(typeof atendimentos.value[0].id).toBe('string');
+    expect(atendimentos.value[0].id.length).toBeGreaterThan(0);
   });
 
   it('remove um atendimento pelo id', async () => {

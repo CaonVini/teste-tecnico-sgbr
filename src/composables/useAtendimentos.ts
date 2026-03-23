@@ -33,7 +33,7 @@ export function useAtendimentos() {
   const { addToast } = useToast();
 
   const addAtendimento = (item: Omit<Atendimento, 'id'>) => {
-    const id = Date.now().toString(); 
+    const id = crypto.randomUUID();
     atendimentos.value.unshift({ ...item, id });
     addToast('Atendimento salvo!', 'success');
   };

@@ -1,5 +1,5 @@
 export interface Atendimento {
-  id: string | number;
+  id: string;
   cliente: string;
   assunto: string;
   status: 'Aberto' | 'Em andamento' | 'Finalizado';
