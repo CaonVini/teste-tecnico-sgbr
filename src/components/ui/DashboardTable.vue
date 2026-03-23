@@ -1,15 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, watch } from "vue";
 import type { Atendimento } from "../../types";
-import ConfirmarCard from "./ConfirmarCard.vue";
-import EditarModal from "./EditarModal.vue";
-import { useAtendimentos } from "../../composables/useAtendimentos";
-
-const { deleteAtendimento, updateAtendimento } = useAtendimentos();
 
 const props = defineProps<{
   items: Atendimento[];
-  hideActions?: boolean;
 }>();
 
 const statusColors = {
@@ -27,34 +21,14 @@ const formatarData = (dataISO?: string) => {
   return `${dia}/${mes}/${ano} às ${horaFormatada}`;
 };
 
-const idParaExcluir = ref<number | string | null>(null);
-const atendimentoParaEditar = ref<Atendimento | null>(null);
-
-const confirmarExclusao = () => {
-  if (idParaExcluir.value) {
-    deleteAtendimento(idParaExcluir.value);
-    idParaExcluir.value = null;
-  }
-};
-
-const salvarEdicao = (atendimentoAtualizado: Atendimento) => {
-  updateAtendimento(atendimentoAtualizado);
-  atendimentoParaEditar.value = null;
-};
-
 const itemsPerPage = 8;
 const currentPage = ref(1);
 
-watch(
-  () => props.items,
-  () => {
-    currentPage.value = 1;
-  },
-);
+watch(() => props.items, () => {
+  currentPage.value = 1;
+});
 
-const totalPages = computed(
-  () => Math.ceil(props.items.length / itemsPerPage) || 1,
-);
+const totalPages = computed(() => Math.ceil(props.items.length / itemsPerPage) || 1);
 
 const paginatedItems = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
@@ -81,12 +55,6 @@ const paginaAnterior = () => {
           <th class="py-3.5 px-6 font-semibold">Status</th>
           <th class="py-3.5 px-6 font-semibold">Data/Hora Atend.</th>
           <th class="py-3.5 px-6 font-semibold">Data/Hora Fim</th>
-          <th
-            v-if="!hideActions"
-            class="py-3.5 px-6 font-semibold w-20 text-center"
-          >
-            Ações
-          </th>
         </tr>
       </thead>
       <tbody class="text-sm">
@@ -108,34 +76,16 @@ const paginaAnterior = () => {
               {{ item.status }}
             </span>
           </td>
-          <td class="py-4 px-6 text-slate-500 font-medium whitespace-nowrap">
+          <td class="py-4 px-6 text-slate-500 font-medium">
             {{ formatarData(item.dataAtendimento) }}
           </td>
-          <td class="py-4 px-6 text-slate-500 font-medium whitespace-nowrap">
+          <td class="py-4 px-6 text-slate-500 font-medium">
             {{ formatarData(item.dataFinalizado) }}
-          </td>
-
-          <td v-if="!hideActions" class="py-4 px-6 text-center">
-            <div class="flex items-center justify-center gap-2">
-              <button
-                @click="atendimentoParaEditar = item"
-                class="w-8 h-8 rounded-lg hover:bg-blue-50 transition-colors focus:outline-none bg-[url('/icons/edit.svg')] bg-center bg-no-repeat bg-[length:16px_16px]"
-                title="Editar"
-              ></button>
-              <button
-                @click="idParaExcluir = item.id"
-                class="w-8 h-8 rounded-lg hover:bg-red-50 transition-colors focus:outline-none bg-[url('/icons/delete.svg')] bg-center bg-no-repeat bg-[length:16px_16px]"
-                title="Excluir"
-              ></button>
-            </div>
           </td>
         </tr>
 
         <tr v-if="items.length === 0">
-          <td
-            :colspan="hideActions ? 5 : 6"
-            class="py-12 text-center text-slate-500"
-          >
+          <td colspan="5" class="py-12 text-center text-slate-500">
             Nenhum atendimento encontrado.
           </td>
         </tr>
@@ -143,55 +93,28 @@ const paginaAnterior = () => {
     </table>
     </div>
 
-    <div
-      v-if="totalPages > 1"
-      class="px-6 py-4 flex items-center justify-between border-t border-slate-200 bg-slate-50 rounded-b-xl"
-    >
+    <div v-if="totalPages > 1" class="px-6 py-4 flex items-center justify-between border-t border-slate-200 bg-slate-50 rounded-b-xl">
       <span class="text-sm text-slate-600">
-        Página
-        <span class="font-medium text-slate-900">{{ currentPage }}</span> de
-        <span class="font-medium text-slate-900">{{ totalPages }}</span>
+        Página <span class="font-medium text-slate-900">{{ currentPage }}</span> de <span class="font-medium text-slate-900">{{ totalPages }}</span>
       </span>
       <div class="flex items-center gap-2">
-        <button
+        <button 
           @click="paginaAnterior"
           :disabled="currentPage === 1"
           class="px-3 py-1.5 text-sm font-medium rounded-md transition-colors"
-          :class="
-            currentPage === 1
-              ? 'text-slate-400 bg-slate-100 cursor-not-allowed'
-              : 'text-slate-700 bg-white border border-slate-300 hover:bg-slate-100'
-          "
+          :class="currentPage === 1 ? 'text-slate-400 bg-slate-100 cursor-not-allowed' : 'text-slate-700 bg-white border border-slate-300 hover:bg-slate-100'"
         >
           Anterior
         </button>
-        <button
+        <button 
           @click="proximaPagina"
           :disabled="currentPage === totalPages"
           class="px-3 py-1.5 text-sm font-medium rounded-md transition-colors"
-          :class="
-            currentPage === totalPages
-              ? 'text-slate-400 bg-slate-100 cursor-not-allowed'
-              : 'text-slate-700 bg-white border border-slate-300 hover:bg-slate-100'
-          "
+          :class="currentPage === totalPages ? 'text-slate-400 bg-slate-100 cursor-not-allowed' : 'text-slate-700 bg-white border border-slate-300 hover:bg-slate-100'"
         >
           Próxima
         </button>
       </div>
     </div>
   </div>
-
-  <ConfirmarCard
-    v-if="idParaExcluir"
-    message="Tem certeza que deseja excluir permanentemente este atendimento?"
-    @confirm="confirmarExclusao"
-    @cancel="idParaExcluir = null"
-  />
-
-  <EditarModal
-    v-if="atendimentoParaEditar"
-    :atendimento="atendimentoParaEditar"
-    @save="salvarEdicao"
-    @cancel="atendimentoParaEditar = null"
-  />
 </template>
