@@ -22,29 +22,26 @@ const estatisticas = computed(() => {
 </script>
 
 <template>
-  <div class="w-full p-8 flex flex-col">
+  <div class="w-full px-6 py-8 md:p-10 flex flex-col">
     <h1 class="text-3xl font-bold text-slate-800">Dashboard</h1>
-    <div class="flex w-full justify-between gap-6 mt-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 mt-6 md:mt-8 w-full">
       <DashboardCard
-        class="flex-1"
         title="Atendimentos Hoje"
         :quantity="estatisticas.hoje"
         icon="/icons/support-svgrepo-com.svg"
       />
       <DashboardCard
-        class="flex-1"
         title="Em Aberto"
         :quantity="estatisticas.abertos"
         icon="/icons/in-progress-svgrepo-com.svg"
       />
       <DashboardCard
-        class="flex-1"
         title="Finalizados"
         :quantity="estatisticas.finalizados"
         icon="/icons/success-check-win-done-mark-good-svgrepo-com.svg"
       />
     </div>
-    <div class="w-full mt-8 p-8 bg-white rounded-xl shadow-sm border border-slate-200">
+    <div class="w-full mt-6 md:mt-10 p-5 sm:p-6 md:p-8 bg-white rounded-xl shadow-sm border border-slate-200 min-w-0 overflow-hidden">
       
       <FiltrosSecao 
         v-model:search="searchQuery" 

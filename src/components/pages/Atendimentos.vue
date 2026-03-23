@@ -14,24 +14,24 @@ const isModalOpen = ref(false);
 </script>
 
 <template>
-  <div class="w-full p-8 flex flex-col">
-    <div class="mb-8 flex justify-between items-center sm:flex-row flex-col gap-4">
+  <div class="w-full px-6 py-8 md:p-10 flex flex-col overflow-x-hidden">
+    <div class="mb-6 md:mb-8 flex justify-between items-start sm:items-center flex-col sm:flex-row gap-4">
       <div>
         <h1 class="text-3xl font-bold text-slate-800">Atendimentos Gerais</h1>
-        <p class="text-slate-500 mt-1">
+        <p class="text-sm md:text-base text-slate-500 mt-2">
           Gerencie, edite ou exclua o histórico de suportes.
         </p>
       </div>
 
       <button
         @click="isModalOpen = true"
-        class="px-5 py-2.5 bg-[#003366] text-white font-medium text-sm rounded-lg hover:bg-blue-900 transition-colors shadow-sm"
+        class="w-full sm:w-auto px-6 py-3 bg-[#003366] text-white font-medium text-sm rounded-lg hover:bg-blue-900 transition-colors shadow-sm"
       >
         + Novo Atendimento
       </button>
     </div>
 
-    <div class="w-full p-8 bg-white rounded-xl shadow-sm border border-slate-200">
+    <div class="w-full p-5 sm:p-6 md:p-8 bg-white rounded-xl shadow-sm border border-slate-200 min-w-0 overflow-hidden">
       <FiltrosSecao 
         v-model:search="searchQuery" 
         v-model:status="statusFilter" 

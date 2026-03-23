@@ -13,14 +13,14 @@ const currentComponent = computed(() => {
 </script>
 
 <template>
-  <div class="flex h-screen w-full bg-slate-50 overflow-hidden">
+  <div class="flex flex-col md:flex-row h-screen w-full max-w-[100vw] bg-slate-50 overflow-hidden">
     <Navbar 
-      class="flex-shrink-0" 
+      class="flex-shrink-0 w-full md:w-auto" 
       :activePage="currentPage" 
       @navigate="(page) => currentPage = page" 
     />
     
-    <main class="flex-1 overflow-y-auto bg-slate-100">
+    <main class="flex-1 w-full min-w-0 overflow-x-hidden overflow-y-auto bg-slate-100 relative">
       <component :is="currentComponent" />
     </main>
 
