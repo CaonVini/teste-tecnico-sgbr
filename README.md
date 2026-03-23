@@ -1,4 +1,4 @@
-# SGBR - Sistema de Gerenciamento de Atendimentos
+# SGBR - Desafio Técnico
 
 <div align="center">
   <img src="public/docs/dashboard.png" alt="Dashboard Preview" width="800" />
@@ -47,11 +47,12 @@ npm run dev
 
 ---
 
-## Tecnologias e Arquitetura
+## Tecnologias e Decisões Técnicas
 
 - **Vue 3 (Composition API):** Interface construída favorecendo código focado com `<script setup>`.
 - **TypeScript:** Utilizado para tipagem e validação de dados nas tabelas e forms.
 - **Tailwind CSS:** Para estilização baseada em utilitários e sistema de design limpo do zero.
+- **Gerenciamento de Estado Customizado:** A manipulação dos dados e a lógica da persistência foram isoladas em _composables_ (`useAtendimentos.ts` por exemplo). Isso separa a regra de negócio da UI, facilitando futuras integrações com APIs reais sem quebrar a tela.
 
 ---
 
