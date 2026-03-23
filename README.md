@@ -70,6 +70,22 @@ src/
  └── main.ts             # Ponto de entrada do Vue
 ```
 
+## Vue vs React — Principais Diferenças
+
+Tenho mais familiaridade com React, então anotar as diferenças que senti na prática ajudou bastante:
+
+**Reatividade**
+No React eu precisava chamar `setState` toda vez que queria atualizar algo. No Vue com `ref`, a atualização acontece automaticamente e os `computed` recalculam sozinhos. No filtro de atendimentos isso ficou bem visível — não precisei de nenhum `useEffect` pra manter a lista atualizada.
+
+**Formulários**
+No React eu estava acostumado a criar um `onChange` pra cada campo do formulário. No Vue o `v-model` já cuida disso direto no template, o que deixou os formulários bem mais limpos.
+
+**Estrutura do arquivo**
+No React tudo fica junto no mesmo arquivo `.tsx`. No Vue o `<script setup>`, o `<template>` e o `<style>` ficam separados dentro do mesmo arquivo, o que ajudou bastante na leitura quando o componente crescia.
+
+**Composables vs Hooks**
+São bem parecidos na ideia. A maior diferença que senti foi que não existe a restrição de ordem de chamada que existe nos hooks do React, o que deu mais liberdade na hora de escrever a lógica dos composables.
+
 ---
 
 Desenvolvido por **Vinicius Caon**.
