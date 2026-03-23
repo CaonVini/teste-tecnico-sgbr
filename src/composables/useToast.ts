@@ -2,7 +2,13 @@ import { ref } from 'vue';
 
 export type ToastType = 'success' | 'error' | 'info';
 
-const toasts = ref<any[]>([]);
+interface Toast {
+  id: number;
+  message: string;
+  type: ToastType;
+}
+
+const toasts = ref<Toast[]>([]);
 let nextId = 0;
 
 export function useToast() {
