@@ -25,10 +25,10 @@ const handleSave = () => {
 
 <template>
   <div
-    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/30 backdrop-blur-[2px]"
+    class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-900/30 backdrop-blur-[2px]"
     @click.self="emit('cancel')"
   >
-    <div class="bg-white rounded-lg shadow-lg w-full max-w-[420px] p-6 text-left flex flex-col gap-4">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-[420px] p-4 sm:p-6 text-left flex flex-col gap-4 overflow-hidden">
       <div class="flex items-center justify-between mb-2">
         <h3 class="text-[1.1rem] font-semibold text-slate-800">
           Editar atendimento
@@ -62,7 +62,7 @@ const handleSave = () => {
           />
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1">Status</label>
             <select
@@ -77,21 +77,25 @@ const handleSave = () => {
 
           <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1">Data Atendimento</label>
-            <input
-              v-model="form.dataAtendimento"
-              type="datetime-local"
-              class="w-full px-3 py-2 border border-slate-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm"
-            />
+            <div class="w-full flex items-center overflow-hidden border border-slate-300 rounded focus-within:ring-1 focus-within:ring-blue-500 focus-within:border-blue-500 bg-white">
+              <input
+                v-model="form.dataAtendimento"
+                type="datetime-local"
+                class="w-full flex-1 min-w-0 bg-transparent outline-none border-none px-2 py-2 text-xs sm:text-sm text-slate-700 tracking-tighter sm:tracking-normal m-0 ring-0 focus:ring-0"
+              />
+            </div>
           </div>
         </div>
 
-        <div v-if="form.status === 'Finalizado'">
+        <div v-if="form.status === 'Finalizado'" class="mt-4">
           <label class="block text-sm font-semibold text-slate-700 mb-1">Data de Término</label>
-          <input
-            v-model="form.dataFinalizado"
-            type="datetime-local"
-            class="w-full px-3 py-2 border border-slate-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm"
-          />
+          <div class="w-full flex items-center overflow-hidden border border-slate-300 rounded focus-within:ring-1 focus-within:ring-blue-500 focus-within:border-blue-500 bg-white">
+            <input
+              v-model="form.dataFinalizado"
+              type="datetime-local"
+              class="w-full flex-1 min-w-0 bg-transparent outline-none border-none px-2 py-2 text-xs sm:text-sm text-slate-700 tracking-tighter sm:tracking-normal m-0 ring-0 focus:ring-0"
+            />
+          </div>
         </div>
       </div>
 

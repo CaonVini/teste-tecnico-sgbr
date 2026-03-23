@@ -8,7 +8,7 @@ const emit = defineEmits(['confirm', 'cancel']);
 
 <template>
   <div
-    class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 backdrop-blur-[2px]"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/30 backdrop-blur-[2px]"
     @click.self="emit('cancel')"
   >
     <div class="bg-white rounded-lg shadow-lg w-full max-w-[420px] p-6 text-left">
